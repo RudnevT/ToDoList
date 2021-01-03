@@ -1,6 +1,5 @@
 package com.example.todolist.screens.main
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,6 @@ import androidx.recyclerview.widget.SortedList
 import com.example.todolist.App.Companion.instance
 import com.example.todolist.R
 import com.example.todolist.model.Task
-import com.example.todolist.screens.create.TaskDetailsActivity
 
 class Adapter : RecyclerView.Adapter<Adapter.TaskViewHolder>() {
     private val sortedList
@@ -44,7 +42,7 @@ class Adapter : RecyclerView.Adapter<Adapter.TaskViewHolder>() {
         init {
             taskText = itemView.findViewById(R.id.task_text)
             delete = itemView.findViewById(R.id.delete)
-            itemView.setOnClickListener { TaskDetailsActivity.start(itemView.context as Activity, task) }
+//            itemView.setOnClickListener { TaskDetailsActivity.start(itemView.context as Activity, task) }
             delete.setOnClickListener { instance!!.taskDao!!.delete(task) }
         }
     }
