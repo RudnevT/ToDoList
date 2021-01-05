@@ -1,5 +1,6 @@
 package com.example.todolist.screens.main
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,18 +32,38 @@ class Adapter : RecyclerView.Adapter<Adapter.TaskViewHolder>() {
     }
 
     class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var taskText: TextView? = null
+        var taskText: TextView
         var delete: View
         var task: Task? = null
+
         fun bind(task: Task) {
             this.task = task
-            taskText?.text = task.text
+            taskText.text = task.text
+            updateCrossOut()
+        }
+
+        fun updateCrossOut(){
+            if(task!!.done){
+                taskText.paintFlags = taskText.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                instance!!.taskDao!!.update(task)
+            } else{
+                taskText.paintFlags = taskText.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                instance!!.taskDao!!.update(task)
+            }
         }
 
         init {
             taskText = itemView.findViewById(R.id.task_text)
             delete = itemView.findViewById(R.id.delete)
-//            itemView.setOnClickListener { TaskDetailsActivity.start(itemView.context as Activity, task) }
+            itemView.setOnClickListener {
+                if(!task!!.done) {
+                    task!!.done = true
+                    updateCrossOut()
+                }else{
+                    task!!.done = false
+                    updateCrossOut()
+                }
+            }
             delete.setOnClickListener { instance!!.taskDao!!.delete(task) }
         }
     }

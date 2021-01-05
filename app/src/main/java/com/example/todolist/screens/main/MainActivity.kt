@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private var recyclerView: RecyclerView? = null
-    private var pagerAdapter: ViewPagerAdapter? = null
+    private lateinit var pagerAdapter: ViewPagerAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,8 +21,8 @@ class MainActivity : AppCompatActivity() {
 
 
         pagerAdapter = ViewPagerAdapter(supportFragmentManager)
-        pagerAdapter!!.addFragment(TasksFragment(), "Все задачи")
-        pagerAdapter!!.addFragment(TaskDetailsFragment(), "Новая задача")
+        pagerAdapter.addFragment(TasksFragment(), "Все задачи")
+        pagerAdapter.addFragment(TaskDetailsFragment(), "Новая задача")
         view_pager.adapter = pagerAdapter
         tabs.setupWithViewPager(view_pager)
 

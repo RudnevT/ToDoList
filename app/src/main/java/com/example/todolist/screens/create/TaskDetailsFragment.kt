@@ -22,8 +22,7 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
     var editText: EditText? = null
     var dateDisplay: TextView? = null
     var timeDisplay: TextView? = null
-    val calendarDate: Calendar = Calendar.getInstance()
-    val calendarTime: Calendar = Calendar.getInstance()
+    val selectDate: Calendar = Calendar.getInstance()
 
     var day = 0
     var month = 0
@@ -50,9 +49,9 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
         val dpd = DatePickerDialog(
             requireContext(),
             DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                this.year = calendarDate.get(Calendar.YEAR)
-                this.month = calendarDate.get(Calendar.MONTH)
-                this.day = calendarDate.get(Calendar.DAY_OF_MONTH)
+                this.year = this.selectDate.get(Calendar.YEAR)
+                this.month = this.selectDate.get(Calendar.MONTH)
+                this.day = this.selectDate.get(Calendar.DAY_OF_MONTH)
                 btn_date_display!!.text = "$dayOfMonth.$monthOfYear.$year"
 
 
@@ -70,8 +69,8 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
         val tpd = TimePickerDialog(
             requireContext(),
             TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                this.hour = calendarTime.get(Calendar.HOUR)
-                this.minute = calendarTime.get(Calendar.MINUTE)
+                this.hour = this.selectDate.get(Calendar.HOUR)
+                this.minute = this.selectDate.get(Calendar.MINUTE)
 
                 btn_time_display!!.text = "$hourOfDay:$minute"
 
@@ -100,11 +99,11 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
     fun initScheduledDate(): Calendar {
 //        val calendar: Calendar = Calendar.getInstance()
 //        calendar.set(year, month,day)
-        calendarDate.set(Calendar.HOUR_OF_DAY,0)
-        calendarDate.set(Calendar.MINUTE,0)
-        calendarDate.set(Calendar.SECOND,0)
-        calendarDate.set(Calendar.MILLISECOND,0)
-        return calendarDate
+        this.selectDate.set(Calendar.HOUR_OF_DAY,0)
+        this.selectDate.set(Calendar.MINUTE,0)
+        this.selectDate.set(Calendar.SECOND,0)
+        this.selectDate.set(Calendar.MILLISECOND,0)
+        return this.selectDate
     }
 
     fun initScheduledTime(): Calendar {

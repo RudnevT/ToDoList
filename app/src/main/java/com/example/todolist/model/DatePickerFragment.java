@@ -20,7 +20,7 @@ public class DatePickerFragment extends DialogFragment
 
     public static DatePickerFragment newInstance(Calendar time, long minDate) {
         DatePickerFragment fragment = new DatePickerFragment();
-        fragment.callback = callback;
+//        fragment.callback = callback;
         fragment.minDate = minDate;
         if (time != null) {
             Bundle args = new Bundle();
@@ -54,16 +54,16 @@ public class DatePickerFragment extends DialogFragment
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         if (view.isShown()) {
-            if (callback != null) {
-                c.set(Calendar.YEAR, year);
-                c.set(Calendar.MONTH, month);
-                c.set(Calendar.DAY_OF_MONTH, day);
-                if (c.getTimeInMillis() < minDate) {
-                    c = GregorianCalendar.getInstance();
-                    c.add(Calendar.DAY_OF_YEAR, 1);
-                }
-                callback.onTimeSelected(c);
-            }
+//            if (callback != null) {
+//                c.set(Calendar.YEAR, year);
+//                c.set(Calendar.MONTH, month);
+//                c.set(Calendar.DAY_OF_MONTH, day);
+//                if (c.getTimeInMillis() < minDate) {
+//                    c = GregorianCalendar.getInstance();
+//                    c.add(Calendar.DAY_OF_YEAR, 1);
+//                }
+//                callback.onTimeSelected(c);
+//            }
         }
     }
 }
