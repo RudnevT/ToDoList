@@ -22,7 +22,7 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
     var editText: EditText? = null
     var dateDisplay: TextView? = null
     var timeDisplay: TextView? = null
-    val selectDate: Calendar = Calendar.getInstance()
+    val selectDate: Calendar = GregorianCalendar.getInstance()
 
     var day = 0
     var month = 0
@@ -165,8 +165,8 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
 
         instance!!.taskDao!!.insert(task)
         editText!!.text = null
-        btn_date_display!!.text = "Выберите дату"
-        btn_time_display!!.text = "Выберите время"
+        btn_date_display!!.text = getString(R.string.pick_date)
+        btn_time_display!!.text = getString(R.string.pick_time)
 
     }
 }

@@ -15,8 +15,8 @@ interface TaskDao {
     @Query("SELECT * FROM Task WHERE uid IN (:tasksIds)")
     fun loadAllTasksByIds(tasksIds: Array<Int>): List<Task>
 
-    @Query("SELECT * FROM Task WHERE scheduledDate LIKE :date")
-    fun getTodayTasksLiveData(date: Long): LiveData<List<Task>>
+    @Query("SELECT * FROM Task WHERE scheduledDate >= :lowerLimitDate AND scheduledDate < :upperLimitDate")
+    fun getTodayTasksLiveData(lowerLimitDate: Long, upperLimitDate: Long): LiveData<List<Task>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(task: Task?)
