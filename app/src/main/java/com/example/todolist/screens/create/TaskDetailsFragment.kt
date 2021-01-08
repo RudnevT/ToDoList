@@ -4,19 +4,24 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.*
+import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.example.todolist.App.Companion.instance
 import com.example.todolist.R
+import com.example.todolist.components.DatePickerFragment
+import com.example.todolist.components.TimePickerCallback
 import com.example.todolist.model.Task
 import kotlinx.android.synthetic.main.fragment_task_details.*
 import kotlinx.android.synthetic.main.fragment_task_details.view.*
 import java.util.*
 
-class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
+class TaskDetailsFragment : Fragment(R.layout.fragment_task_details), TimePickerCallback {
     lateinit var v: View
     var task: Task? = null
     var editText: EditText? = null
@@ -46,25 +51,31 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
             saveTask()
         }
 
-        val dpd = DatePickerDialog(
-            requireContext(),
-            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                this.year = this.selectDate.get(Calendar.YEAR)
-                this.month = this.selectDate.get(Calendar.MONTH)
-                this.day = this.selectDate.get(Calendar.DAY_OF_MONTH)
-                btn_date_display!!.text = "$dayOfMonth.$monthOfYear.$year"
+        val dps = DatePickerFragment.newInstance(selectDate,System.currentTimeMillis(), TaskDetailsFragment())
 
-
-            },
-            year,
-            month,
-            day
-        )
+        val fragmentManager: FragmentManager? = childFragmentManager
+        val fragmentTransaction: FragmentTransaction? = fragmentManager?.beginTransaction()
+        fragmentTransaction?.add(R.id.taskDetailsFragment,dps)
+        fragmentTransaction?.commit()
 
         v.btn_date_display.setOnClickListener {
-            dpd.show()
-            dpd.datePicker.minDate = System.currentTimeMillis()
+            dps.onDateSet()
         }
+
+//        val dpd = DatePickerDialog(
+//            requireContext(),
+//            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+//                this.year = this.selectDate.get(Calendar.YEAR)
+//                this.month = this.selectDate.get(Calendar.MONTH)
+//                this.day = this.selectDate.get(Calendar.DAY_OF_MONTH)
+//                btn_date_display!!.text = "$dayOfMonth.$monthOfYear.$year"
+//
+//
+//            },
+//            year,
+//            month,
+//            day
+//        )
 
         val tpd = TimePickerDialog(
             requireContext(),
@@ -167,6 +178,14 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details) {
         editText!!.text = null
         btn_date_display!!.text = getString(R.string.pick_date)
         btn_time_display!!.text = getString(R.string.pick_time)
+
+    }
+
+    override fun onTimeSelected(c: Calendar?) {
+        this.year = c!!.get(Calendar.YEAR)
+        this.month = c!!.get(Calendar.MONTH)
+        this.day = c!!.get(Calendar.DAY_OF_MONTH)
+        btn_date_display!!.text = "$day.$month.$year"
 
     }
 }
