@@ -54,12 +54,12 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details), TimePicker
         val dps = DatePickerFragment.newInstance(selectDate,System.currentTimeMillis(), this)
 
         val fragmentManager: FragmentManager? = childFragmentManager
-        val fragmentTransaction: FragmentTransaction? = fragmentManager?.beginTransaction()
-        fragmentTransaction?.add(R.id.taskDetailsFragment,dps)
-        fragmentTransaction?.commit()
+//        val fragmentTransaction: FragmentTransaction? = fragmentManager?.beginTransaction()
+//        fragmentTransaction?.add(R.id.taskDetailsFragment,dps)
+//        fragmentTransaction?.commit()
 
         v.btn_date_display.setOnClickListener {
-
+            dps.show(fragmentManager!!,"tag")
         }
 
 //        val dpd = DatePickerDialog(
