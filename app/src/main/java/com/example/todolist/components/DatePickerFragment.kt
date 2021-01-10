@@ -9,7 +9,7 @@ import androidx.fragment.app.DialogFragment
 import java.util.*
 
 class DatePickerFragment : DialogFragment(), OnDateSetListener {
-    private var callback: TimePickerCallback? = null
+    private var callback: DatePickerCallback? = null
     private var c: Calendar? = null
     private var minDate: Long = 0
 
@@ -19,7 +19,6 @@ class DatePickerFragment : DialogFragment(), OnDateSetListener {
         }
         if (c == null) {
             c = GregorianCalendar.getInstance()
-            //c.add(Calendar.DAY_OF_YEAR, 1);
         }
         val year = c!![Calendar.YEAR]
         val month = c!![Calendar.MONTH]
@@ -37,18 +36,14 @@ class DatePickerFragment : DialogFragment(), OnDateSetListener {
                 c!![Calendar.YEAR] = year
                 c!![Calendar.MONTH] = month
                 c!![Calendar.DAY_OF_MONTH] = day
-                if (c!!.timeInMillis < minDate) {
-                    c = GregorianCalendar.getInstance()
-                    c!!.add(Calendar.DAY_OF_YEAR, 1)
-                }
-                callback?.onTimeSelected(c)
+//                callback?.onTimeSelected(c)
             }
         }
     }
 
     companion object {
         private const val ARG_TIME = "arg_time"
-        fun newInstance(time: Calendar?, minDate: Long, callback: TimePickerCallback): DatePickerFragment {
+        fun newInstance(time: Calendar?, minDate: Long, callback: DatePickerCallback): DatePickerFragment {
             val fragment = DatePickerFragment()
             fragment.callback = callback;
             fragment.minDate = minDate
