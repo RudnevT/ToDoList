@@ -3,16 +3,25 @@ package com.example.todolist.screens.main
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
+import android.widget.Button
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
+import com.example.todolist.components.DatePickerCallback
+import com.example.todolist.components.DatePickerFragment
 import com.example.todolist.screens.create.TaskDetailsFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), DatePickerCallback {
 
     private var recyclerView: RecyclerView? = null
     private lateinit var pagerAdapter: ViewPagerAdapter
+    private var pickDateBtn: Button? = null
 
+    companion object {
+        var selectedDate: Calendar = GregorianCalendar.getInstance()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,13 +35,16 @@ class MainActivity : AppCompatActivity() {
         view_pager.adapter = pagerAdapter
         tabs.setupWithViewPager(view_pager)
 
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setHomeButtonEnabled(true)
 
+        pickDateBtn = findViewById(R.id.pick_date_btn)
 
-
-
-//        supportActionBar!!.setDisplayHomeAsUpEnabled(true)    //разобраться нужно или нет
-//        supportActionBar!!.setHomeButtonEnabled(true)
-
+        val dpd = DatePickerFragment.newInstance(selectedDate, System.currentTimeMillis(), this)
+        val fragmentManager: FragmentManager? = supportFragmentManager
+        pickDateBtn?.setOnClickListener {
+            dpd.show(fragmentManager!!, "tag")
+        }
     }
 
 

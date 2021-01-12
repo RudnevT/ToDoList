@@ -13,13 +13,15 @@ import com.example.todolist.App.Companion.instance
 import com.example.todolist.R
 import com.example.todolist.components.DatePickerCallback
 import com.example.todolist.components.DatePickerFragment
+import com.example.todolist.components.TimePickerCallback
+import com.example.todolist.components.TimePickerFragment
 import com.example.todolist.model.Task
 import kotlinx.android.synthetic.main.fragment_task_details.*
 import kotlinx.android.synthetic.main.fragment_task_details.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TaskDetailsFragment : Fragment(R.layout.fragment_task_details), DatePickerCallback {
+class TaskDetailsFragment : Fragment(R.layout.fragment_task_details), DatePickerCallback, TimePickerCallback {
     lateinit var v: View
     var task: Task? = null
     var editText: EditText? = null
@@ -48,7 +50,7 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details), DatePicker
         }
 
         val dps = DatePickerFragment.newInstance(selectDate, System.currentTimeMillis(), this)
-
+        val tps = TimePickerFragment.newInstance(selectDate,this)
         val fragmentManager: FragmentManager? = childFragmentManager
 
         v.btn_date_display.text = String.format("%tF",selectDate)
@@ -58,31 +60,21 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details), DatePicker
             dps.show(fragmentManager!!, "tag")
         }
 
-
-        val tpd = TimePickerDialog(
-            requireContext(),
-            TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                this.hour = this.selectDate.get(Calendar.HOUR)
-                this.minute = this.selectDate.get(Calendar.MINUTE)
-
-                btn_time_display!!.text = "$hourOfDay:$minute"
-
-            },
-            hour,
-            minute,
-            true
-        )
-
         v.btn_time_display.setOnClickListener {
-            tpd.show()
+            tps.show(fragmentManager!!,"tag")
         }
 
         return v
     }
 
-    override fun onTimeSelected(c: Calendar?) {
+    override fun onDateSelected(c: Calendar?) {
         super.onTimeSelected(c)
         btn_date_display.text = String.format("%tF",c)
+    }
+
+    override fun onTimeSelected(c: Calendar?) {
+        super.onTimeSelected(c)
+        btn_time_display!!.text = String.format("%tR",c)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,12 +86,6 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details), DatePicker
         super.onViewCreated(view, savedInstanceState)
     }
 
-
-    fun initScheduledTime(): Calendar {
-        val calendar: Calendar = Calendar.getInstance()
-        calendar.set(0, 0, 0, hour, minute, 0)
-        return calendar
-    }
 
     fun timeRound(_calendar: Calendar): Long? {
         val calendar = _calendar
@@ -118,7 +104,7 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details), DatePicker
             task!!.text = editText!!.text.toString()
             task!!.timeStamp = System.currentTimeMillis()
             task!!.scheduledDate = selectDate.timeInMillis
-            task!!.scheduledTime = timeRound(initScheduledTime())
+//            task!!.scheduledTime = timeRound(initScheduledTime())
         }
 //        Toast.makeText(requireContext(), task!!.scheduledDate.toString(), LENGTH_LONG).show()
 //        Toast.makeText(requireContext(), task!!.scheduledTime.toString(), LENGTH_LONG).show()

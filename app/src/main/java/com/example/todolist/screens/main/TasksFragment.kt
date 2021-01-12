@@ -32,7 +32,7 @@ class TasksFragment : Fragment(R.layout.fragment_content_main) {
         super.onCreate(savedInstanceState)
 
         val mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        mainViewModel.taskTodayLiveData.observe(this, { tasks ->
+        mainViewModel.taskSelectDateLiveData.observe(this, { tasks ->
             adapter.setItems(tasks)
         })
 

@@ -40,7 +40,7 @@ class DatePickerFragment : DialogFragment(), OnDateSetListener {
                     c = GregorianCalendar.getInstance()
                     c!!.add(Calendar.DAY_OF_YEAR, 1)
                 }
-                callback?.onTimeSelected(c)
+                callback?.onDateSelected(c)
             }
         }
     }
