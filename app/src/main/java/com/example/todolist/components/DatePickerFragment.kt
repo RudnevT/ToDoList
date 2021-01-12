@@ -6,6 +6,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
+import java.text.SimpleDateFormat
 import java.util.*
 
 class DatePickerFragment : DialogFragment(), OnDateSetListener {
@@ -29,21 +30,28 @@ class DatePickerFragment : DialogFragment(), OnDateSetListener {
     }
 
 
-
     override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
         if (view.isShown) {
             if (callback != null) {
                 c!![Calendar.YEAR] = year
                 c!![Calendar.MONTH] = month
                 c!![Calendar.DAY_OF_MONTH] = day
-//                callback?.onTimeSelected(c)
+                if (c!!.timeInMillis < minDate) {
+                    c = GregorianCalendar.getInstance()
+                    c!!.add(Calendar.DAY_OF_YEAR, 1)
+                }
+                callback?.onTimeSelected(c)
             }
         }
     }
 
     companion object {
         private const val ARG_TIME = "arg_time"
-        fun newInstance(time: Calendar?, minDate: Long, callback: DatePickerCallback): DatePickerFragment {
+        fun newInstance(
+            time: Calendar?,
+            minDate: Long,
+            callback: DatePickerCallback
+        ): DatePickerFragment {
             val fragment = DatePickerFragment()
             fragment.callback = callback;
             fragment.minDate = minDate

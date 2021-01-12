@@ -2,20 +2,21 @@ package com.example.todolist.screens.create
 
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
-import android.widget.Toast.LENGTH_LONG
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.todolist.App.Companion.instance
 import com.example.todolist.R
-import com.example.todolist.components.DatePickerFragment
 import com.example.todolist.components.DatePickerCallback
+import com.example.todolist.components.DatePickerFragment
 import com.example.todolist.model.Task
 import kotlinx.android.synthetic.main.fragment_task_details.*
 import kotlinx.android.synthetic.main.fragment_task_details.view.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 class TaskDetailsFragment : Fragment(R.layout.fragment_task_details), DatePickerCallback {
@@ -41,6 +42,7 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details), DatePicker
         dateDisplay = v.findViewById(R.id.btn_date_display)
         timeDisplay = v.findViewById(R.id.btn_time_display)
 
+
         v.button_save.setOnClickListener {
             saveTask()
         }
@@ -49,9 +51,13 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details), DatePicker
 
         val fragmentManager: FragmentManager? = childFragmentManager
 
+        v.btn_date_display.text = String.format("%tF",selectDate)
+        v.btn_time_display.text = String.format("%tR",selectDate)
+
         v.btn_date_display.setOnClickListener {
             dps.show(fragmentManager!!, "tag")
         }
+
 
         val tpd = TimePickerDialog(
             requireContext(),
@@ -74,6 +80,11 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details), DatePicker
         return v
     }
 
+    override fun onTimeSelected(c: Calendar?) {
+        super.onTimeSelected(c)
+        btn_date_display.text = String.format("%tF",c)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -82,6 +93,7 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details), DatePicker
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
+
 
     fun initScheduledTime(): Calendar {
         val calendar: Calendar = Calendar.getInstance()
@@ -113,15 +125,7 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details), DatePicker
 
         instance!!.taskDao!!.insert(task)
         editText!!.text = null
-        btn_date_display!!.text = getString(R.string.pick_date)
-        btn_time_display!!.text = getString(R.string.pick_time)
 
     }
 
-//    override fun onTimeSelected(c: Calendar?) {
-//        this.year = c!!.get(Calendar.YEAR)
-//        this.month = c!!.get(Calendar.MONTH)
-//        this.day = c!!.get(Calendar.DAY_OF_MONTH)
-//        btn_date_display!!.text = "$day.$month.$year"
-//    }
 }
