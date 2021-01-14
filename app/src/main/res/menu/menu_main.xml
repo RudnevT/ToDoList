@@ -3,21 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.todolist.screens.main.MainActivity">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="101"
-        android:title="@string/show"
+        android:id="@+id/pick_date_item"
+        android:title="@string/pick_date"
         app:showAsAction="always">
-
-        <menu>
-            <item
-                android:id="@+id/show_today"
-                android:title="@string/today_tasks"/>
-
-            <item
-                android:id="@+id/show_all"
-                android:title="@string/all_tasks"/>
-        </menu>
-
     </item>
 
 </menu>

@@ -2,9 +2,7 @@ package com.example.todolist.screens.create
 
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -27,11 +25,7 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details), DatePicker
     var editText: EditText? = null
     var dateDisplay: TextView? = null
     var timeDisplay: TextView? = null
-    val selectDate: Calendar = GregorianCalendar.getInstance()
-
-    var hour = 0
-    var minute = 0
-
+    private val selectDate: Calendar = GregorianCalendar.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,7 +62,7 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details), DatePicker
     }
 
     override fun onDateSelected(c: Calendar?) {
-        super.onTimeSelected(c)
+        super.onDateSelected(c)
         btn_date_display.text = String.format("%tF",c)
     }
 
@@ -80,6 +74,11 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details), DatePicker
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

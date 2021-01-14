@@ -13,15 +13,10 @@ import com.example.todolist.screens.create.TaskDetailsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
-class MainActivity : AppCompatActivity(), DatePickerCallback {
+class MainActivity : AppCompatActivity() {
 
     private var recyclerView: RecyclerView? = null
     private lateinit var pagerAdapter: ViewPagerAdapter
-    private var pickDateBtn: Button? = null
-
-    companion object {
-        var selectedDate: Calendar = GregorianCalendar.getInstance()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,24 +32,18 @@ class MainActivity : AppCompatActivity(), DatePickerCallback {
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setHomeButtonEnabled(true)
-
-        pickDateBtn = findViewById(R.id.pick_date_btn)
-
-        val dpd = DatePickerFragment.newInstance(selectedDate, System.currentTimeMillis(), this)
-        val fragmentManager: FragmentManager? = supportFragmentManager
-        pickDateBtn?.setOnClickListener {
-            dpd.show(fragmentManager!!, "tag")
-        }
     }
 
 
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    //    override fun onCreateOptionsMenu(menu: Menu): Boolean {
 //        // Inflate the menu; this adds items to the action bar if it is present.
 //        menuInflater.inflate(R.menu.menu_main, menu)
 //        return true
 //    }
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        return super.onCreateOptionsMenu(menu)
+    }
+    //    override fun onOptionsItemSelected(item: MenuItem): Boolean {
 //        // Handle action bar item clicks here. The action bar will
 //        // automatically handle clicks on the Home/Up button, so long
 //        // as you specify a parent activity in AndroidManifest.xml.
