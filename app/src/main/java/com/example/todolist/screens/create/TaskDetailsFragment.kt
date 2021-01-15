@@ -43,6 +43,12 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details), DatePicker
             saveTask()
         }
 
+//        selectDate.set(Calendar.HOUR_OF_DAY,0)
+//        selectDate.set(Calendar.MINUTE,0)
+//        selectDate.set(Calendar.SECOND,0)
+//        selectDate.set(Calendar.MILLISECOND,0)
+        timeRound(selectDate)
+
         val dps = DatePickerFragment.newInstance(selectDate, System.currentTimeMillis(), this)
         val tps = TimePickerFragment.newInstance(selectDate,this)
         val fragmentManager: FragmentManager? = childFragmentManager
@@ -63,7 +69,8 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details), DatePicker
 
     override fun onDateSelected(c: Calendar?) {
         super.onDateSelected(c)
-        btn_date_display.text = String.format("%tF",c)
+//        btn_date_display.text = String.format("%tF",c)
+        btn_date_display.text = String.format("%tF", c)
     }
 
     override fun onTimeSelected(c: Calendar?) {
@@ -86,15 +93,17 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details), DatePicker
     }
 
 
-    fun timeRound(_calendar: Calendar): Long? {
+    fun timeRound(_calendar: Calendar): Calendar? {
         val calendar = _calendar
         val roundHalf: Int = 30
         val roundFull: Int = 0
         if (calendar.get(Calendar.MINUTE) in 1..30) {
             calendar.set(Calendar.MINUTE, roundHalf)
-        } else if (calendar.get(Calendar.MINUTE) in 31..60)
+        } else if (calendar.get(Calendar.MINUTE) in 31..60){
             calendar.set(Calendar.MINUTE, roundFull)
-        return calendar.timeInMillis
+            calendar.add(Calendar.HOUR_OF_DAY, 1)
+        }
+        return calendar
     }
 
     private fun saveTask() {
@@ -103,7 +112,7 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details), DatePicker
             task!!.text = editText!!.text.toString()
             task!!.timeStamp = System.currentTimeMillis()
             task!!.scheduledDate = selectDate.timeInMillis
-//            task!!.scheduledTime = timeRound(initScheduledTime())
+            task!!.scheduledTime = selectDate.timeInMillis
         }
 //        Toast.makeText(requireContext(), task!!.scheduledDate.toString(), LENGTH_LONG).show()
 //        Toast.makeText(requireContext(), task!!.scheduledTime.toString(), LENGTH_LONG).show()
