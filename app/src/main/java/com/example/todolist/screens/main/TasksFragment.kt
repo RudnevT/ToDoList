@@ -61,13 +61,7 @@ class TasksFragment : Fragment(R.layout.fragment_content_main), DatePickerCallba
             R.id.pick_date_item ->{
                 val dps = DatePickerFragment.newInstance(PickDate.pickDate, System.currentTimeMillis(), this)
                 val fragmentManager: FragmentManager? = childFragmentManager
-//                item.title = String.format("%tF",PickDate.pickDate)
                 dps.show(fragmentManager!!, "tag")
-
-//                mainViewModel?.taskSelectDateLiveData1?.observe(this, { tasks ->
-//                    adapter.setItems(tasks) })
-
-//                Toast.makeText(requireContext(),String.format("%tF",PickDate.pickDate), LENGTH_LONG).show()
                 true
             }
             else -> {

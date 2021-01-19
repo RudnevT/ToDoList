@@ -43,10 +43,6 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details), DatePicker
             saveTask()
         }
 
-//        selectDate.set(Calendar.HOUR_OF_DAY,0)
-//        selectDate.set(Calendar.MINUTE,0)
-//        selectDate.set(Calendar.SECOND,0)
-//        selectDate.set(Calendar.MILLISECOND,0)
         timeRound(selectDate)
 
         val dps = DatePickerFragment.newInstance(selectDate, System.currentTimeMillis(), this)
@@ -69,7 +65,6 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details), DatePicker
 
     override fun onDateSelected(c: Calendar?) {
         super.onDateSelected(c)
-//        btn_date_display.text = String.format("%tF",c)
         btn_date_display.text = String.format("%tF", c)
     }
 
@@ -114,9 +109,6 @@ class TaskDetailsFragment : Fragment(R.layout.fragment_task_details), DatePicker
             task!!.scheduledDate = selectDate.timeInMillis
             task!!.scheduledTime = selectDate.timeInMillis
         }
-//        Toast.makeText(requireContext(), task!!.scheduledDate.toString(), LENGTH_LONG).show()
-//        Toast.makeText(requireContext(), task!!.scheduledTime.toString(), LENGTH_LONG).show()
-
         instance!!.taskDao!!.insert(task)
         editText!!.text = null
 

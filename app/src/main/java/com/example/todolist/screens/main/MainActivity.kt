@@ -15,7 +15,6 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    private var recyclerView: RecyclerView? = null
     private lateinit var pagerAdapter: ViewPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,11 +34,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    //    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        menuInflater.inflate(R.menu.menu_main, menu)
-//        return true
-//    }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         return super.onCreateOptionsMenu(menu)
     }

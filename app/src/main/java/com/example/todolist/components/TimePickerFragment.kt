@@ -12,8 +12,8 @@ class TimePickerFragment: DialogFragment(), TimePickerDialog.OnTimeSetListener {
     private var c: Calendar? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        if (arguments != null && requireArguments().containsKey(TimePickerFragment.ARG_TIME)) {
-            c = requireArguments().getSerializable(TimePickerFragment.ARG_TIME) as Calendar?
+        if (arguments != null && requireArguments().containsKey(ARG_TIME)) {
+            c = requireArguments().getSerializable(ARG_TIME) as Calendar?
         }
         if (c == null) {
             c = GregorianCalendar.getInstance()

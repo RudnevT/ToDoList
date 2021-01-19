@@ -40,10 +40,6 @@ class DatePickerFragment : DialogFragment(), OnDateSetListener {
                 c!![Calendar.MINUTE] = 0
                 c!![Calendar.SECOND] = 0
                 c!![Calendar.MILLISECOND] = 0
-//                if (c!!.timeInMillis < minDate) {
-//                    c = GregorianCalendar.getInstance()
-//                    c!!.add(Calendar.DAY_OF_YEAR, 1)
-//                }
                 callback?.onDateSelected(c)
             }
         }
